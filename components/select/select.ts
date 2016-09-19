@@ -1,9 +1,8 @@
 import { Component, Input, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
 import { SelectItem } from './select-item';
-import { HighlightPipe, stripTags } from './select-pipes';
+import { stripTags } from './select-pipes';
 import { OptionsBehavior } from './select-interfaces';
 import { escapeRegexp } from './common';
-import { OffClickDirective } from './off-click';
 
 let styles = `
 .ui-select-toggle {
@@ -114,8 +113,6 @@ let optionsTemplate = `
 
 @Component({
   selector: 'ng-select',
-  directives: [OffClickDirective],
-  pipes: [HighlightPipe],
   styles: [styles],
   template: `
   <div tabindex="0"
@@ -200,11 +197,13 @@ export class SelectComponent implements OnInit {
       this._items = this.itemObjects = [];
     } else {
       this._items = value.filter((item:any) => {
-        if ((typeof item === 'string' && item) || (typeof item === 'object' && item && item.text && item.id)) {
+        // if ((typeof item === 'string' && item) || (typeof item === 'object' && item && item.text && item.id)) {
+        if ((typeof item === 'string') || (typeof item === 'object' && item.text)) {
           return item;
         }
       });
-      this.itemObjects = this._items.map((item:any) => (typeof item === 'string' ? new SelectItem(item) : new SelectItem({id: item[this.idField], text: item[this.textField]})));
+      // this.itemObjects = this._items.map((item:any) => (typeof item === 'string' ? new SelectItem(item) : new SelectItem({id: item[this.idField], text: item[this.textField]})));
+      this.itemObjects = this._items.map((item:any) => new SelectItem(item));
     }
   }
 
