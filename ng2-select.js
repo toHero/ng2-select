@@ -4,10 +4,4 @@ function __export(m) {
 }
 var select_1 = require('./components/select');
 __export(require('./components/select/select'));
-__export(require('./components/select'));
-Object.defineProperty(exports, '__esModule', {value: true});
-exports.default = {
-  directives: [
-    select_1.SELECT_DIRECTIVES
-  ]
-};
+__export(require('./components/select.module'));
